@@ -131,15 +131,52 @@ public class ActivoFijoRepositoryTest {
 		Update update = new Update();
 		update.set("serial", "67890");
 		update.set("fechaBaja", zoned.convert(fechaBaja));
-		ActivoFijoDocument activoFijo = mongoTemplate.findAndModify(query, update, ActivoFijoDocument.class);
+		mongoTemplate.findAndModify(query, update, ActivoFijoDocument.class);
 		
 		ActivoFijoDocument activoFijoModificado = activoFijoRepository.findByActivoFijoId(1);
 		
 		ZonedDateTimeLeerConvertidor zonedleer = new ZonedDateTimeLeerConvertidor();
-		assertNotEquals("El serial no cambio", activoFijo.getSerial(), activoFijoModificado.getSerial());
-		assertNotEquals("La fecha de baja no cambio",
-				format.format(zonedleer.convert(activoFijo.getFechaBaja())),
+		assertEquals("El serial no cambio", "67890", activoFijoModificado.getSerial());
+		assertEquals("La fecha de baja no cambio",
+				"04 Jan 2020",
 				format.format(zonedleer.convert(activoFijoModificado.getFechaBaja())));
 	}
 	
+	/**
+	 * Con esto se compreueba que hay un bug al actualizar un documento ya existen, hay un reporte de este bug. 
+	 * Una forma de solucionarlo se propone en el Test con nombre: solucionActualizarSerialInternoYFechaBaja
+	 */
+	@Test
+	public void comprobarActualizarSerialInternoYFechaBaja() {
+		ActivoFijoDocument activoFijoModificado = activoFijoRepository.findByActivoFijoId(1);
+		
+		ZonedDateTimeLeerConvertidor zonedleer = new ZonedDateTimeLeerConvertidor();
+		assertEquals("El serial no cambio", "67890", activoFijoModificado.getSerial());
+		assertEquals("La fecha de baja no cambio",
+				"04 Jan 2020",
+				format.format(zonedleer.convert(activoFijoModificado.getFechaBaja())));
+	}
+	
+	
+	@Test
+	public void solucionActualizarSerialInternoYFechaBaja() {
+		LocalDateTime fecha = LocalDateTime.now(ZoneOffset.UTC);
+		ZonedDateTimeEscribirConvertidor zoned = new ZonedDateTimeEscribirConvertidor();
+		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
+		ZonedDateTime fechaBaja = fechaCompra.plusMonths(4);
+		
+		activoFijoRepository.deleteActivoFijo(1);
+		
+		ActivoFijoDocument activoFijo = new ActivoFijoDocument.Builder(1, "Prueba", "Maquinaria", "67890", 1, 100, 100,
+				100, 100, 986.000, zoned.convert(fechaCompra), zoned.convert(fechaBaja), "activo", "azul").build();
+		activoFijoRepository.insert(activoFijo);
+		
+		ActivoFijoDocument activoFijoModificado = activoFijoRepository.findByActivoFijoId(1);
+		
+		ZonedDateTimeLeerConvertidor zonedleer = new ZonedDateTimeLeerConvertidor();
+		assertEquals("El serial no cambio", "67890", activoFijoModificado.getSerial());
+		assertEquals("La fecha de baja no cambio",
+				"04 Jan 2020",
+				format.format(zonedleer.convert(activoFijoModificado.getFechaBaja())));
+	}
 }

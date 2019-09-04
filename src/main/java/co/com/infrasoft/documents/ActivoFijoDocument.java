@@ -305,6 +305,14 @@ public class ActivoFijoDocument{
 	public String getColor() {
 		return color;
 	}
+
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
+
+	public void setFechaBaja(Date fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
 	
 }
 

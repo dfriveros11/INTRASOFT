@@ -2,6 +2,7 @@ package co.com.infrasoft.repository;
 
 
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.DeleteQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +30,14 @@ public interface ActivoFijoRepository extends MongoRepository<ActivoFijoDocument
 	 * @return ActivoFijo
 	 */
 	public ActivoFijoDocument findByActivoFijoId(int id);
+	
+	/**
+	 * Elimina el activo fijo con el id pasado
+	 * @param productPromotionId
+	 * @return
+	 */
+	@DeleteQuery(value="{'activoFijoId' :?0}")
+	public void deleteActivoFijo(int activoFijoId);
 	
 
 
