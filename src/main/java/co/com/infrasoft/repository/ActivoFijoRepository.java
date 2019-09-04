@@ -1,5 +1,6 @@
 package co.com.infrasoft.repository;
 
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -15,10 +16,20 @@ import co.com.infrasoft.documents.ActivoFijoDocument;
 public interface ActivoFijoRepository extends MongoRepository<ActivoFijoDocument, ObjectId>{
 	
 	/**
-	 * Encuentra el activo fijo 
-	 * @param id
-	 * @return product
+	 * Encuentra el activo fijo por el id de mongo 
+	 * @param ObjectId
+	 * @return ActivoFijo
 	 */
-	public ActivoFijoDocument findBillById(String id);
+	public ActivoFijoDocument findActivoFijoDocumentById(ObjectId id);
+	
+	
+	/**
+	 * Encuentra el activo fijo por el id  
+	 * @param id
+	 * @return ActivoFijo
+	 */
+	public ActivoFijoDocument findByActivoFijoId(int id);
+	
+
 
 }
