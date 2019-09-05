@@ -13,97 +13,96 @@ import co.com.infrasoft.documents.utilities.EstadoActual;
 import co.com.infrasoft.documents.utilities.Tipo;
 
 /**
- * @author Diego Riveros
- * Se utiliza un patron builder para la creacion de objetos
+ * @author Diego Riveros Se utiliza un patron builder para la creacion de
+ *         objetos
  */
 @Document
-public class ActivoFijoDocument{
-	
+public class ActivoFijoDocument {
 
 	/**
 	 * Mongo Product's ID
 	 */
 	@Id
 	private ObjectId id;
-	
+
 	/**
 	 * Nombre del Activo
 	 */
 	private String nombre;
-	
+
 	/**
 	 * Tipo del Activo
 	 */
 	private String tipo;
-	
+
 	/**
 	 * Serial del Activo
 	 */
 	private String serial;
-	
+
 	/**
 	 * Numero Interno del Inventario del Activo
 	 */
-	private long numInterInventario; 
-	
+	private long numInterInventario;
+
 	/**
 	 * Peso del Activo
 	 */
 	private int peso;
-	
+
 	/**
 	 * Alto del Activo
 	 */
 	private int alto;
-	
+
 	/**
 	 * Ancho del Activo
 	 */
 	private int ancho;
-	
+
 	/**
 	 * Largo del Activo
 	 */
 	private int largo;
-	
+
 	/**
 	 * Valor de Compra del Activo
 	 */
 	private double valorCompra;
-	
+
 	/**
 	 * Fecha de Compra del Activo
 	 */
 	private Date fechaCompra;
-	
+
 	/**
 	 * Fecha de Baja del Activo
 	 */
 	private Date fechaBaja;
-	
+
 	/**
 	 * Estado Actual del Activo
 	 */
 	private String estadoActual;
-	
+
 	/**
 	 * Color del Activo
 	 */
-	private String color; 
-	
-	
-	public ActivoFijoDocument() {}
-	
+	private String color;
+
+	public ActivoFijoDocument() {
+	}
+
 	/**
 	 * La clase builder para inicializar el Activo Fijo
 	 *
 	 */
-	public static class Builder{
-		
+	public static class Builder {
+
 		private String nombre;
 		private String tipo;
 		private String serial;
-		private long numInterInventario; 
+		private long numInterInventario;
 		private int peso;
 		private int alto;
 		private int ancho;
@@ -113,9 +112,10 @@ public class ActivoFijoDocument{
 		private Date fechaBaja;
 		private String estadoActual;
 		private String color;
-		
+
 		/**
 		 * Clase constructora
+		 * 
 		 * @param activoFijoId
 		 * @param nombre
 		 * @param tipo
@@ -132,8 +132,8 @@ public class ActivoFijoDocument{
 		 * @param color
 		 */
 		public Builder(String nombre, String tipo, String serial, long numInterInventario, int peso, int alto,
-				int ancho, int largo, double valorCompra, Date fechaCompra, Date fechaBaja,
-				String estadoActual, String color) {
+				int ancho, int largo, double valorCompra, Date fechaCompra, Date fechaBaja, String estadoActual,
+				String color) {
 			super();
 			this.nombre = nombre;
 			this.tipo = escogerTipo(tipo);
@@ -149,74 +149,72 @@ public class ActivoFijoDocument{
 			this.estadoActual = escogerEstadoActual(estadoActual);
 			this.color = escogerColor(color);
 		}
-		
 
 		/**
 		 * Escoger el tipo de activo
+		 * 
 		 * @param tipo
 		 * @return el string del tipo escogido
 		 * @throws AssertionError cuando no existe el tipo
 		 */
-		private String escogerTipo(String tipo) throws AssertionError{
+		private String escogerTipo(String tipo) throws AssertionError {
 			String tipoEs = "";
-			if(Tipo.BIENESINMUEBLES.toString().toLowerCase().equals(tipo.toLowerCase())) {
+			if (Tipo.BIENESINMUEBLES.toString().toLowerCase().equals(tipo.toLowerCase())) {
 				tipoEs = tipo.toUpperCase();
-			}else if(Tipo.MAQUINARIA.toString().toLowerCase().equals(tipo.toLowerCase())) {
+			} else if (Tipo.MAQUINARIA.toString().toLowerCase().equals(tipo.toLowerCase())) {
 				tipoEs = tipo.toUpperCase();
-			}else if(Tipo.MATERIALOFICINA.toString().toLowerCase().equals(tipo.toLowerCase())) {
+			} else if (Tipo.MATERIALOFICINA.toString().toLowerCase().equals(tipo.toLowerCase())) {
 				tipoEs = tipo.toUpperCase();
-			}else {
+			} else {
 				throw new AssertionError("Tipo Desconocido: " + tipo);
 			}
 			return tipoEs;
 		}
-		
-		
+
 		/**
 		 * Seleciona el estado actual del activo fijo
+		 * 
 		 * @param estadoActual
 		 * @return
-		 * @throws AssertionError cuando no existe el estado actual 
+		 * @throws AssertionError cuando no existe el estado actual
 		 */
-		private String escogerEstadoActual(String estadoActual) throws AssertionError{
+		private String escogerEstadoActual(String estadoActual) throws AssertionError {
 			String estadoAtualEs = "";
-			if(EstadoActual.ACTIVO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			if (EstadoActual.ACTIVO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else if(EstadoActual.DADODEBAJA.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.DADODEBAJA.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else if(EstadoActual.ENREPARACIÓN.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.ENREPARACIÓN.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}
-			else if(EstadoActual.DISPONIBLE.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.DISPONIBLE.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else if(EstadoActual.ASIDNADO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.ASIDNADO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else {
+			} else {
 				throw new AssertionError("Estado Actual Desconocido: " + estadoActual);
 			}
 			return estadoAtualEs;
 		}
-		
+
 		private String escogerColor(String color) {
 			String colorEs = "";
-			if(Color.AZUL.toString().toLowerCase().equals(color.toLowerCase())) {
+			if (Color.AZUL.toString().toLowerCase().equals(color.toLowerCase())) {
 				colorEs = color.toUpperCase();
-			}else {
+			} else {
 				throw new AssertionError("Color Desconocido: " + color);
 			}
 			return colorEs;
 		}
-	
 
 		public ActivoFijoDocument build() {
 			return new ActivoFijoDocument(this);
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * Inicializa los valores
+	 * 
 	 * @param builder
 	 */
 	private ActivoFijoDocument(Builder builder) {
@@ -238,7 +236,7 @@ public class ActivoFijoDocument{
 	public ObjectId getId() {
 		return id;
 	}
-	
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -290,6 +288,5 @@ public class ActivoFijoDocument{
 	public String getColor() {
 		return color;
 	}
-	
-}
 
+}

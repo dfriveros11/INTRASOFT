@@ -26,8 +26,13 @@ public class ZonedDateConvertidor {
     public static Date convertZonedToDate(ZonedDateTime zonedDateTime) {
         return Date.from(zonedDateTime.toInstant());
     }
+    
+    public static ZoneId zona() {
+		return zona;
+	}
 
-	public static DateTimeFormatter getFormat() {
+	public static DateTimeFormatter dateFormat() {
 		return format;
 	}
+
 }

@@ -31,25 +31,25 @@ public class ActivoFijoRepositoryTest {
 	@Autowired
 	private ActivoFijoRepository activoFijoRepository;
 
-	private final DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMM yyyy");
+	private final DateTimeFormatter format = ZonedDateConvertidor.dateFormat();
 
-	private final ZoneId zona = ZoneId.of("America/Bogota");
-	
+	private final ZoneId zona = ZonedDateConvertidor.zona();
+
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
 	@Test
-	public void crearActivoFijo() {
+	public void crearActivoFijoTest() {
 		LocalDateTime fecha = LocalDateTime.now(ZoneOffset.UTC);
 		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaBaja = fechaCompra.plusMonths(2);
 
-		ActivoFijoDocument activoFijoGuardar = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
-
+		ActivoFijoDocument activoFijoGuardar = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100,
+				100, 100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra),
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
 
 		ActivoFijoDocument activoFijoComprobar = activoFijoRepository.insert(activoFijoGuardar);
-		
+
 		Optional<ActivoFijoDocument> activoFijoOptinal = activoFijoRepository.findById(activoFijoComprobar.getId());
 		ActivoFijoDocument activoFijo = activoFijoOptinal.get();
 		assertEquals("El nombre es distinto", "Prueba", activoFijo.getNombre());
@@ -63,10 +63,8 @@ public class ActivoFijoRepositoryTest {
 		assertEquals("El largo es distinto", 100, activoFijo.getLargo());
 		assertEquals("El valor de compra es distinto", 986.000, activoFijo.getValorCompra(), 0.0000);
 
-
 		assertEquals("El formato de la fecha de compra esta mal guardada",
-				format.format(LocalDateTime.now(ZoneOffset.UTC)),
-				format.format(activoFijo.getFechaCompra()));
+				format.format(LocalDateTime.now(ZoneOffset.UTC)), format.format(activoFijo.getFechaCompra()));
 		assertEquals("El formato de la fecha de baja esta mal guardada",
 				format.format(LocalDateTime.now(ZoneOffset.UTC).plusMonths(2)),
 				format.format(activoFijo.getFechaBaja()));
@@ -77,63 +75,66 @@ public class ActivoFijoRepositoryTest {
 	}
 
 	@Test(expected = AssertionError.class)
-	public void construirMalActivoFijoTiṕo() {
+	public void construirMalActivoFijoTipoTest() {
 		LocalDateTime fecha = LocalDateTime.now(ZoneOffset.UTC);
 		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaBaja = fechaCompra.plusMonths(2);
-		
-		new ActivoFijoDocument.Builder("Prueba", "No existe", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
-		
+
+		new ActivoFijoDocument.Builder("Prueba", "No existe", "123", 1, 100, 100, 100, 100, 986.000,
+				ZonedDateConvertidor.convertZonedToDate(fechaCompra),
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+
 	}
-	
+
 	@Test(expected = AssertionError.class)
-	public void construirMalActivoFijoEstadoActual() {
+	public void construirMalActivoFijoEstadoActualTest() {
 		LocalDateTime fecha = LocalDateTime.now(ZoneOffset.UTC);
 		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaBaja = fechaCompra.plusMonths(2);
-		
-		new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "No existe", "azul").build();
-		
+
+		new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100, 100, 100, 986.000,
+				ZonedDateConvertidor.convertZonedToDate(fechaCompra),
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "No existe", "azul").build();
+
 	}
-	
+
 	@Test(expected = AssertionError.class)
-	public void construirMalActivoFijoColor() {
+	public void construirMalActivoFijoColorTest() {
 		LocalDateTime fecha = LocalDateTime.now(ZoneOffset.UTC);
 		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaBaja = fechaCompra.plusMonths(2);
-		
-		new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "No existe").build();
-		
+
+		new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100, 100, 100, 986.000,
+				ZonedDateConvertidor.convertZonedToDate(fechaCompra),
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "No existe").build();
+
 	}
-	
-	
+
 	@Test
-	public void actualizarSerialInternoYFechaBaja() {
+	public void actualizarSerialInternoYFechaBajaTest() {
 		LocalDateTime fecha = LocalDateTime.now(ZoneOffset.UTC);
 		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaBaja = fechaCompra.plusMonths(4);
-		
-		ActivoFijoDocument activoFijoGuardar = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+
+		ActivoFijoDocument activoFijoGuardar = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100,
+				100, 100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra),
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
 		ActivoFijoDocument activoFijoComprobar = activoFijoRepository.insert(activoFijoGuardar);
-		
+
 		Query query = new Query();
 		query.addCriteria(Criteria.where("_id").is(activoFijoComprobar.getId()));
 		Update update = new Update();
 		update.set("serial", "67890");
 		update.set("fechaBaja", ZonedDateConvertidor.convertZonedToDate(fechaBaja));
 		mongoTemplate.findAndModify(query, update, ActivoFijoDocument.class);
-		
-		Optional<ActivoFijoDocument> activoFijoModificado = activoFijoRepository.findById(activoFijoComprobar.getId());
-				
-		assertEquals("El serial no cambio", "67890", activoFijoModificado.get().getSerial());
-		assertEquals("La fecha de baja no cambio",
-				"05 Jan 2020",
-				format.format(activoFijoModificado.get().getFechaBaja()));
-	}
-	
-}
 
+		Optional<ActivoFijoDocument> activoFijoModificado = activoFijoRepository.findById(activoFijoComprobar.getId());
+
+		assertEquals("El serial no cambio", "67890", activoFijoModificado.get().getSerial());
+		assertEquals("La fecha de baja no cambio", "05 Jan 2020",
+				format.format(activoFijoModificado.get().getFechaBaja()));
+
+		activoFijoRepository.deleteAll();
+	}
+
+}
