@@ -61,18 +61,18 @@ public class ActivoFijoServiceTest {
 		ActivoFijoDocument activoFijo = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
 				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
 		ObjectId id = activoFijoService.crearActivoFijo(activoFijo);
-		ActivoFijoDocument activo = activoFijoService.encontrarActivoFijo(id);
+		ActivoFijoDocument activo = activoFijoService.obtenerActivoFijo(id);
 		assertNotNull(activo);
 	}
 	
 	@Test(expected = NullPointerException.class)
 	public void encontrarActivoFijoNoExisteTest() {
-		activoFijoService.encontrarActivoFijo(new ObjectId("5d70e1ad79d45517b3212e14"));
+		activoFijoService.obtenerActivoFijo(new ObjectId("5d70e1ad79d45517b3212e14"));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void encontrarActivoFijoConObjectIDNoValidoTest() {
-		activoFijoService.encontrarActivoFijo(new ObjectId("ATSDEV"));
+		activoFijoService.obtenerActivoFijo(new ObjectId("ATSDEV"));
 	}
 	
 	@Test
