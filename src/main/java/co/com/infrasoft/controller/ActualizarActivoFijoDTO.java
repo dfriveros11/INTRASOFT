@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
+
 /**
  * Esta clase se utiliza para encapsular la informacion para actulizar un activo fijo
  * @author Diego Riveros
@@ -14,7 +16,7 @@ public class ActualizarActivoFijoDTO {
 
 	@NotNull(message="Debe haber un id del activo fijo a actualoizar")
 	@NotEmpty(message="Debe haber un id del activo fijo a actualoizar")
-	private String id;
+	private ObjectId id;
 	
 	@NotNull(message="El serial debe tener un valor para poder actualizar el activo fijo")
 	@NotEmpty(message="El serial debe tener un valor para poder actualizar el activo fijo")
@@ -23,11 +25,11 @@ public class ActualizarActivoFijoDTO {
 	@NotNull(message="Debe haber una fecha baja para poder actualizar el activo fijo")
 	private Date fechaBaja;
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

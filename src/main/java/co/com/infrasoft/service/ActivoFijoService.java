@@ -46,9 +46,8 @@ public class ActivoFijoService {
 	 * @param id
 	 * @return
 	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
 	 */
-	public ActivoFijoDocument obtenerActivoFijo(ObjectId id) throws NullPointerException, IllegalArgumentException {
+	public ActivoFijoDocument obtenerActivoFijo(ObjectId id) throws NullPointerException {
 		return encontraActivoFijo(id);
 	}
 
@@ -58,16 +57,12 @@ public class ActivoFijoService {
 	 * @return
 	 * @throws NullPointerException
 	 * El objeto no existe
-	 * @throws IllegalArgumentException
-	 * El object id no tiene el formato correcto
 	 */
-	private ActivoFijoDocument encontraActivoFijo(ObjectId id) throws NullPointerException, IllegalArgumentException {
+	private ActivoFijoDocument encontraActivoFijo(ObjectId id) throws NullPointerException {
 		try {
 			Optional<ActivoFijoDocument> activo = activoRepository.findById(id);
 			return activo.orElseThrow(() -> new NullPointerException());
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("El id: " + id + "no tiene el formato correcto");
-		} catch (NullPointerException e) {
+		}catch (NullPointerException e) {
 			throw new NullPointerException("El objeto con el id: " + id + " no existe en la base de datos");
 		}
 	}

@@ -27,7 +27,7 @@ import co.com.infrasoft.service.ActivoFijoService;
 
 /**
  * 
- * Aqui esta los end points
+ * Aqui son los end points
  * 
  * @author Diego Riveros
  *
@@ -83,10 +83,10 @@ public class ActivoFijoController {
 		JsonNode rootNode = mapper.createObjectNode();
 		try {
 			LocalDateTime fecha = actualizarActioFijo.getFechaBaja().toInstant().atZone(ZonedDateConvertidor.zona()).toLocalDateTime();
-			activoFijoservice.actualizarActivoFijo(new ObjectId(actualizarActioFijo.getId()), actualizarActioFijo.getSerial(), fecha);
+			activoFijoservice.actualizarActivoFijo(actualizarActioFijo.getId(), actualizarActioFijo.getSerial(), fecha);
 			((ObjectNode) rootNode).put("http_status", "202");
 			((ObjectNode) rootNode).put("message", "El Activo se actualizo correctamente");
-			((ObjectNode) rootNode).put("id", actualizarActioFijo.getId());
+			((ObjectNode) rootNode).put("id", actualizarActioFijo.getId().toString());
 			((ObjectNode) rootNode).put("serial", actualizarActioFijo.getSerial());
 			((ObjectNode) rootNode).put("fechaBaja", fecha.atZone(ZonedDateConvertidor.zona()).toString());
 			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.ACCEPTED);
@@ -120,10 +120,6 @@ public class ActivoFijoController {
 			((ObjectNode) rootNode).put("http_status", "404");
 			((ObjectNode) rootNode).put("message", e.getMessage());
 			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.NOT_FOUND);
-		}catch (IllegalArgumentException e) {
-			((ObjectNode) rootNode).put("http_status", "500");
-			((ObjectNode) rootNode).put("message", e.getMessage());
-			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
