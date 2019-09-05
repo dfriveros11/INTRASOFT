@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "790f5982-75d5-4332-aa20-3c3d97220cb3",
+		"name": "INTRASOFT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "crearUnActivoFijo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bfe4fd52-75c3-4ffd-a622-76dca4ac8bac",
+						"exec": [
+							"pm.test(\"Status code is 202\", function(){",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"ACTIVO_FIJO_ID\", data.id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\":\"John\",\n  \"tipo\": \"MAQUINARIA\",\n  \"serial\":\"123\",\n  \"numInterInventario\":\"123\",\n  \"peso\":\"10\",\n  \"alto\":\"10\",\n  \"ancho\":\"10\",\n  \"largo\":\"10\",\n  \"valorCompra\":\"200560.22\",\n  \"fechaCompra\":\"2532516399000\",\n  \"fechaBaja\":\"1532516399000\",\n  \"estadoActual\":\"ACTIVO\",\n  \"color\":\"AZUL\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						"create"
+					]
+				},
+				"description": "Se crea un activo fijo Valido"
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerActivoFijo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/getbyid/{{ACTIVO_FIJO_ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						"getbyid",
+						"{{ACTIVO_FIJO_ID}}"
+					]
+				},
+				"description": "Obtener un Activo Fijo que se creo"
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarActivoFijo",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\":\"{{ACTIVO_FIJO_ID}}\" ,\n  \"serial\":\"789\",\n  \"fechaBaja\":\"1532526399000\"\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						"update"
+					]
+				},
+				"description": "se actualiza el activo fijo"
+			},
+			"response": []
+		}
+	]
+}
