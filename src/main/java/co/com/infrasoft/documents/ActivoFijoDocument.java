@@ -3,9 +3,17 @@ package co.com.infrasoft.documents;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
 import co.com.infrasoft.documents.utilities.Color;
@@ -28,66 +36,90 @@ public class ActivoFijoDocument {
 	/**
 	 * Nombre del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un nombre")
+	@NotEmpty(message = "El activo fijo debe tener un nombre")
 	private String nombre;
 
 	/**
 	 * Tipo del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un tipo")
+	@NotEmpty(message = "El activo fijo debe tener un tipo")
 	private String tipo;
 
 	/**
 	 * Serial del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un serial")
+	@NotEmpty(message = "El activo fijo debe tener un serial")
 	private String serial;
 
 	/**
 	 * Numero Interno del Inventario del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un numero de interno de inventario")
+	@Min(value = 1L, message = "The value must be positive")
 	private long numInterInventario;
 
 	/**
 	 * Peso del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un peso")
+	@Min(value = 1L, message = "The value must be positive")
 	private int peso;
 
 	/**
 	 * Alto del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un altura")
+	@Min(value = 1L, message = "The value must be positive")
 	private int alto;
 
 	/**
 	 * Ancho del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un ancho")
+	@Min(value = 1L, message = "The value must be positive")
 	private int ancho;
 
 	/**
 	 * Largo del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un largo")
+	@Min(value = 1L, message = "The value must be positive")
 	private int largo;
 
 	/**
 	 * Valor de Compra del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un valor de compra")
+	@Min(value = 1L, message = "The value must be positive")
 	private double valorCompra;
 
 	/**
 	 * Fecha de Compra del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un fecha de compra")
 	private Date fechaCompra;
 
 	/**
 	 * Fecha de Baja del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un decha de baja")
 	private Date fechaBaja;
 
 	/**
 	 * Estado Actual del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un estado actual")
+	@NotEmpty(message = "El activo fijo debe tener un estado actual")
 	private String estadoActual;
 
 	/**
 	 * Color del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un color")
+	@NotEmpty(message = "El activo fijo debe tener un color")
 	private String color;
 
 	public ActivoFijoDocument() {
@@ -287,6 +319,39 @@ public class ActivoFijoDocument {
 
 	public String getColor() {
 		return color;
+	}
+
+	@Override
+	public String toString() {
+		return "id=" + this.id + ", nombre=" + this.nombre + ", tipo=" + this.tipo + ", serial=" + this.serial
+				+ ", numero interno de inventario=" + this.numInterInventario + ", peso=" + this.peso + ", alto="
+				+ this.alto + ", ancho=" + this.ancho + ", largo=" + this.largo + ", valorCompra=" + this.valorCompra
+				+ ", fechaCompra=" + this.fechaCompra + ", fechaBaja=" + this.fechaBaja + ", estadoActual="
+				+ this.estadoActual + ", color=" + this.color;
+	}
+
+	/**
+	 * Entrega la representaion de json de la clase
+	 * @return JsonNode
+	 */
+	public JsonNode toJson() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode rootNode = mapper.createObjectNode();
+		((ObjectNode) rootNode).put("id", this.id.toString());
+		((ObjectNode) rootNode).put("nombre", this.nombre);
+		((ObjectNode) rootNode).put("tipo", this.tipo);
+		((ObjectNode) rootNode).put("serial", this.serial);
+		((ObjectNode) rootNode).put("numero interno de inventario", this.numInterInventario + "");
+		((ObjectNode) rootNode).put("peso", this.peso + "");
+		((ObjectNode) rootNode).put("alto", this.alto + "");
+		((ObjectNode) rootNode).put("ancho", this.ancho + "");
+		((ObjectNode) rootNode).put("largo", this.largo + "");
+		((ObjectNode) rootNode).put("valorCompra", this.valorCompra + "");
+		((ObjectNode) rootNode).put("fechaCompra", this.fechaCompra.toString());
+		((ObjectNode) rootNode).put("fechaBaja", this.fechaBaja.toString());
+		((ObjectNode) rootNode).put("estadoActual", this.estadoActual);
+		((ObjectNode) rootNode).put("color", this.color);
+		return rootNode;
 	}
 
 }
