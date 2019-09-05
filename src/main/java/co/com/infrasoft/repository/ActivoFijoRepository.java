@@ -1,7 +1,9 @@
 package co.com.infrasoft.repository;
 
+
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.DeleteQuery;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import co.com.infrasoft.documents.ActivoFijoDocument;
@@ -12,13 +14,17 @@ import co.com.infrasoft.documents.ActivoFijoDocument;
  *
  */
 @Repository
-public interface ActivoFijoRepository extends MongoRepository<ActivoFijoDocument, ObjectId>{
+public interface ActivoFijoRepository extends CrudRepository<ActivoFijoDocument, ObjectId>{
 	
 	/**
-	 * Encuentra el activo fijo 
-	 * @param id
-	 * @return product
+	 * Elimina el activo fijo con el id pasado
+	 * @param productPromotionId
+	 * @return
 	 */
-	public ActivoFijoDocument findBillById(String id);
+	@DeleteQuery(value="{'activoFijoId' :?0}")
+	public void deleteActivoFijo(int activoFijoId);
+	
+
 
 }
+

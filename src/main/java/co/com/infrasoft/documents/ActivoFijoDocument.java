@@ -1,12 +1,12 @@
 package co.com.infrasoft.documents;
 
-import java.awt.Color;
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import co.com.infrasoft.documents.utilities.Color;
 import co.com.infrasoft.documents.utilities.EstadoActual;
 import co.com.infrasoft.documents.utilities.Tipo;
 
@@ -72,12 +72,12 @@ public class ActivoFijoDocument{
 	/**
 	 * Fecha de Compra del Activo
 	 */
-	private ZonedDateTime fechaCompra;
+	private Date fechaCompra;
 	
 	/**
 	 * Fecha de Baja del Activo
 	 */
-	private ZonedDateTime fechaBaja;
+	private Date fechaBaja;
 	
 	/**
 	 * Estado Actual del Activo
@@ -87,11 +87,9 @@ public class ActivoFijoDocument{
 	/**
 	 * Color del Activo
 	 */
-	private Color color; 
+	private String color; 
 	
-	/**
-	 * Constructor vacio
-	 */
+	
 	public ActivoFijoDocument() {}
 	
 	/**
@@ -99,6 +97,7 @@ public class ActivoFijoDocument{
 	 *
 	 */
 	public static class Builder{
+		
 		private String nombre;
 		private String tipo;
 		private String serial;
@@ -108,15 +107,14 @@ public class ActivoFijoDocument{
 		private int ancho;
 		private int largo;
 		private double valorCompra;
-		private final ZonedDateTime fechaCompra;
-		private ZonedDateTime fechaBaja;
+		private Date fechaCompra;
+		private Date fechaBaja;
 		private String estadoActual;
-		private Color color;
+		private String color;
 		
-
 		/**
 		 * Clase constructora
-		 * @param id
+		 * @param activoFijoId
 		 * @param nombre
 		 * @param tipo
 		 * @param serial
@@ -132,8 +130,8 @@ public class ActivoFijoDocument{
 		 * @param color
 		 */
 		public Builder(String nombre, String tipo, String serial, long numInterInventario, int peso, int alto,
-				int ancho, int largo, double valorCompra, ZonedDateTime fechaCompra, ZonedDateTime fechaBaja,
-				String estadoActual, Color color) {
+				int ancho, int largo, double valorCompra, Date fechaCompra, Date fechaBaja,
+				String estadoActual, String color) {
 			super();
 			this.nombre = nombre;
 			this.tipo = escogerTipo(tipo);
@@ -147,10 +145,10 @@ public class ActivoFijoDocument{
 			this.fechaCompra = fechaCompra;
 			this.fechaBaja = fechaBaja;
 			this.estadoActual = escogerEstadoActual(estadoActual);
-			this.color = color;
+			this.color = escogerColor(color);
 		}
 		
-	
+
 		/**
 		 * Escoger el tipo de activo
 		 * @param tipo
@@ -196,6 +194,17 @@ public class ActivoFijoDocument{
 			}
 			return estadoAtualEs;
 		}
+		
+		private String escogerColor(String color) {
+			String colorEs = "";
+			if(Color.AZUL.toString().toLowerCase().equals(color.toLowerCase())) {
+				colorEs = color.toUpperCase();
+			}else {
+				throw new AssertionError("Color Desconocido: " + color);
+			}
+			return colorEs;
+		}
+	
 
 		public ActivoFijoDocument build() {
 			return new ActivoFijoDocument(this);
@@ -208,7 +217,7 @@ public class ActivoFijoDocument{
 	 * Inicializa los valores
 	 * @param builder
 	 */
-	public ActivoFijoDocument(Builder builder) {
+	private ActivoFijoDocument(Builder builder) {
 		this.nombre = builder.nombre;
 		this.tipo = builder.tipo;
 		this.serial = builder.serial;
@@ -227,7 +236,7 @@ public class ActivoFijoDocument{
 	public ObjectId getId() {
 		return id;
 	}
-
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -264,11 +273,11 @@ public class ActivoFijoDocument{
 		return valorCompra;
 	}
 
-	public ZonedDateTime getFechaCompra() {
+	public Date getFechaCompra() {
 		return fechaCompra;
 	}
 
-	public ZonedDateTime getFechaBaja() {
+	public Date getFechaBaja() {
 		return fechaBaja;
 	}
 
@@ -276,7 +285,7 @@ public class ActivoFijoDocument{
 		return estadoActual;
 	}
 
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 	
