@@ -41,10 +41,26 @@ public class ActivoFijoService {
 		this.mongoTemplate = mongoTemplate;
 	}
 
-	public ActivoFijoDocument encontrarActivoFijo(ObjectId id) throws NullPointerException, IllegalArgumentException {
+	/**
+	 * Obtiene el activoFijo
+	 * @param id
+	 * @return
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 */
+	public ActivoFijoDocument obtenerActivoFijo(ObjectId id) throws NullPointerException, IllegalArgumentException {
 		return encontraActivoFijo(id);
 	}
 
+	/**
+	 * Obtiene el activo Fijo
+	 * @param id
+	 * @return
+	 * @throws NullPointerException
+	 * El objeto no existe
+	 * @throws IllegalArgumentException
+	 * El object id no tiene el formato correcto
+	 */
 	private ActivoFijoDocument encontraActivoFijo(ObjectId id) throws NullPointerException, IllegalArgumentException {
 		try {
 			Optional<ActivoFijoDocument> activo = activoRepository.findById(id);
@@ -56,9 +72,17 @@ public class ActivoFijoService {
 		}
 	}
 
+	/**
+	 * Actualiza el activo fijo
+	 * @param id
+	 * @param serial
+	 * @param date
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 */
 	public void actualizarActivoFijo(ObjectId id, String serial, LocalDateTime date)
 			throws NullPointerException, IllegalArgumentException {
-		ActivoFijoDocument activoFijo = this.encontrarActivoFijo(id);
+		ActivoFijoDocument activoFijo = this.obtenerActivoFijo(id);
 		ZonedDateTime fechaBaja = date.atZone(ZonedDateConvertidor.zona());
 		final ZonedDateTime fechaCompra = activoFijo.getFechaCompra();
 		verficarFechas(fechaCompra, fechaBaja);
@@ -72,13 +96,27 @@ public class ActivoFijoService {
 
 	}
 
+	/**
+	 * Verifica la regla de negocio en donde la fecha de compra > fecha de baja
+	 * @param fechaCompra
+	 * @param fechaBaja
+	 * @throws IllegalArgumentException
+	 * En el caso que la fecha de compra < lafecha de baja
+	 */
 	private void verficarFechas(ZonedDateTime fechaCompra, ZonedDateTime fechaBaja) throws IllegalArgumentException {
 		if (fechaCompra.compareTo(fechaBaja) < 0) {
-			throw new IllegalArgumentException("La fecha de compra debe ser superior a la fecha de baja"
+			throw new IllegalArgumentException("La fecha de compra debe ser superior a la fecha de baja. Se encontraron los sigueintes valores "
 					+ "fecha de compra: " + fechaCompra + " fecha de baja: " + fechaBaja);
 		}
 	}
 
+	/**
+	 * Crea un Activo Fijo, verificando la regla de negocio en donde la fecha de compra > fecha de baja
+	 * @param activoFijo
+	 * @return
+	 * @throws IllegalArgumentException
+	 *  En el caso que la fecha de compra < lafecha de baja
+	 */
 	public ObjectId crearActivoFijo(ActivoFijoDocument activoFijo) throws IllegalArgumentException {
 		verficarFechas(activoFijo.getFechaCompra(), activoFijo.getFechaBaja());
 		return activoRepository.insert(activoFijo).getId();
