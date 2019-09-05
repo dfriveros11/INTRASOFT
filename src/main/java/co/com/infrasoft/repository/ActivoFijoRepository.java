@@ -3,7 +3,7 @@ package co.com.infrasoft.repository;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.DeleteQuery;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import co.com.infrasoft.documents.ActivoFijoDocument;
@@ -14,7 +14,7 @@ import co.com.infrasoft.documents.ActivoFijoDocument;
  *
  */
 @Repository
-public interface ActivoFijoRepository extends CrudRepository<ActivoFijoDocument, ObjectId>{
+public interface ActivoFijoRepository extends MongoRepository<ActivoFijoDocument, ObjectId>{
 	
 	/**
 	 * Elimina el activo fijo con el id pasado

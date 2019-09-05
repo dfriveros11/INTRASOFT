@@ -1,11 +1,13 @@
 package co.com.infrasoft.documents;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
 import co.com.infrasoft.documents.utilities.Color;
 import co.com.infrasoft.documents.utilities.EstadoActual;
 import co.com.infrasoft.documents.utilities.Tipo;
@@ -273,12 +275,12 @@ public class ActivoFijoDocument{
 		return valorCompra;
 	}
 
-	public Date getFechaCompra() {
-		return fechaCompra;
+	public ZonedDateTime getFechaCompra() {
+		return ZonedDateConvertidor.convertDateToZoned(fechaCompra);
 	}
 
-	public Date getFechaBaja() {
-		return fechaBaja;
+	public ZonedDateTime getFechaBaja() {
+		return ZonedDateConvertidor.convertDateToZoned(fechaBaja);
 	}
 
 	public String getEstadoActual() {
