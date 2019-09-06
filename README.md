@@ -12,3 +12,20 @@ Y para conectarse al mongoShell es:
 
 Por último se utilizó spring boot. Para correr la aplicacion es necesario hacerle run en la clase IntrasoftApplication que tiene el tag @SpringBootApplication.
 
+
+## Sistema operativo
+
+Se uso linux para generar el proyecto y correr las pruebas. 
+
+## Pasos para generar una jar
+
+El proyecto es maven entonces tambien se puede correr el proyecto con maven. Los pasos a seguir oara generar el jr con eclipse son:
+
+1. Click en run
+2. Click run as -> maven build..
+3. En goal escribir package
+4. finalizar
+
+##Javadoc
+
+El javadoc se encuentra en la carpeta con nombre javadoc.
