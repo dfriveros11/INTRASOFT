@@ -14,8 +14,7 @@ import org.bson.types.ObjectId;
  */
 public class ActualizarActivoFijoDTO {
 
-	@NotNull(message="Debe haber un id del activo fijo a actualoizar")
-	@NotEmpty(message="Debe haber un id del activo fijo a actualoizar")
+	@NotNull(message="Debe haber un id del activo fijo a actualizar")
 	private ObjectId id;
 	
 	@NotNull(message="El serial debe tener un valor para poder actualizar el activo fijo")

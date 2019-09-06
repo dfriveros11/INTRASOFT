@@ -2,6 +2,7 @@ package co.com.infrasoft.service;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -115,6 +116,14 @@ public class ActivoFijoService {
 	public ObjectId crearActivoFijo(ActivoFijoDocument activoFijo) throws IllegalArgumentException {
 		verficarFechas(activoFijo.getFechaCompra(), activoFijo.getFechaBaja());
 		return activoRepository.insert(activoFijo).getId();
+	}
+
+	/**
+	 * Encuentra todos los activos fijos
+	 * @return List<ActivoFijoDocument>
+	 */
+	public List<ActivoFijoDocument> obtenerActivosFijos() {
+		return activoRepository.findAll();
 	}
 
 }

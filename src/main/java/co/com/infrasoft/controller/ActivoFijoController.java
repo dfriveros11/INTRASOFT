@@ -1,6 +1,7 @@
 package co.com.infrasoft.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -54,7 +55,7 @@ public class ActivoFijoController {
 	 * @param activoFijo
 	 * @return ResponseEntity<JsonNode
 	 */
-	@PostMapping("/create")
+	@PostMapping("/")
 	@ResponseBody
 	public ResponseEntity<JsonNode> crearActivoFijo(@RequestBody @Valid ActivoFijoDocument activoFijo) {
 		JsonNode rootNode = mapper.createObjectNode();
@@ -77,7 +78,7 @@ public class ActivoFijoController {
 	 * @param actualizarActioFijo
 	 * @return ResponseEntity<JsonNode>
 	 */
-	@PutMapping("/update")
+	@PutMapping("/")
 	@ResponseBody
 	public ResponseEntity<JsonNode> actualizarActivo(@RequestBody @Valid ActualizarActivoFijoDTO actualizarActioFijo) {
 		JsonNode rootNode = mapper.createObjectNode();
@@ -106,7 +107,7 @@ public class ActivoFijoController {
 	 * @param id
 	 * @return ResponseEntity<JsonNode>
 	 */
-	@GetMapping("/getbyid/{id}")
+	@GetMapping("/{id}")
 	@ResponseBody
 	public ResponseEntity<JsonNode> obtenerActivoFijo(@PathVariable("id") ObjectId id) {
 		JsonNode rootNode = mapper.createObjectNode();
@@ -115,6 +116,32 @@ public class ActivoFijoController {
 			((ObjectNode) rootNode).put("http_status", "202");
 			((ObjectNode) rootNode).put("message", "El Activo fijo se encontro");
 			((ObjectNode) rootNode).set("Activo FIjo", activoFijo.toJson());
+			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.ACCEPTED);
+		}catch(NullPointerException e) {
+			((ObjectNode) rootNode).put("http_status", "404");
+			((ObjectNode) rootNode).put("message", e.getMessage());
+			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	/**
+	 * Obtiene todos los activos fijos
+	 * @param id
+	 * @return ResponseEntity<JsonNode>
+	 */
+	@GetMapping("/")
+	@ResponseBody
+	public ResponseEntity<JsonNode> obtenerActivosFijos() {
+		JsonNode rootNode = mapper.createObjectNode();
+		try {
+			List<ActivoFijoDocument> activoFijo = activoFijoservice.obtenerActivosFijos();
+			((ObjectNode) rootNode).put("http_status", "202");
+			((ObjectNode) rootNode).put("message", "Se muestra todos los activos fijos");
+			int numero = 1;
+			for (ActivoFijoDocument activoFijoDocument : activoFijo) {
+				((ObjectNode) rootNode).set("Activo Fijo " + numero, activoFijoDocument.toJson());
+				numero++;
+			}
 			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.ACCEPTED);
 		}catch(NullPointerException e) {
 			((ObjectNode) rootNode).put("http_status", "404");

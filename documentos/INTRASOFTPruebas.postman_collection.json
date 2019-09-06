@@ -39,7 +39,7 @@
 					"raw": "{\n  \"nombre\":\"John\",\n  \"tipo\": \"MAQUINARIA\",\n  \"serial\":\"123\",\n  \"numInterInventario\":\"123\",\n  \"peso\":\"10\",\n  \"alto\":\"10\",\n  \"ancho\":\"10\",\n  \"largo\":\"10\",\n  \"valorCompra\":\"200560.22\",\n  \"fechaCompra\":\"2532516399000\",\n  \"fechaBaja\":\"1532516399000\",\n  \"estadoActual\":\"ACTIVO\",\n  \"color\":\"AZUL\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/create",
+					"raw": "http://localhost:8080/activosfijos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -47,7 +47,7 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"create"
+						""
 					]
 				},
 				"description": "Se crea un activo fijo Valido"
@@ -84,7 +84,7 @@
 					"raw": "{\n  \"nombre\":\"John\",\n  \"tipo\": \"MAQUINARIA\",\n  \"serial\":\"123\",\n  \"numInterInventario\":\"123\",\n  \"alto\":\"10\",\n  \"ancho\":\"10\",\n  \"largo\":\"10\",\n  \"valorCompra\":\"200560.22\",\n  \"fechaCompra\":\"2532516399000\",\n  \"fechaBaja\":\"1532516399000\",\n  \"estadoActual\":\"ACTIVO\",\n  \"color\":\"AZUL\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/create",
+					"raw": "http://localhost:8080/activosfijos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,7 +92,7 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"create"
+						""
 					]
 				},
 				"description": "Se crea un activo fijo Valido"
@@ -107,8 +107,8 @@
 					"script": {
 						"id": "bfe4fd52-75c3-4ffd-a622-76dca4ac8bac",
 						"exec": [
-							"pm.test(\"Status code is 400\", function(){",
-							"    pm.response.to.have.status(400);",
+							"pm.test(\"Status code is 500\", function(){",
+							"    pm.response.to.have.status(500);",
 							"});",
 							""
 						],
@@ -129,7 +129,7 @@
 					"raw": "{\n  \"nombre\":\"John\",\n  \"tipo\": \"MAQUINARIA\",\n  \"serial\":\"123\",\n  \"numInterInventario\":\"123\",\n  \"peso\":\"10\",\n  \"alto\":\"10\",\n  \"ancho\":\"10\",\n  \"largo\":\"10\",\n  \"valorCompra\":\"200560.22\",\n  \"fechaCompra\":\"1532516399000\",\n  \"fechaBaja\":\"2532516399000\",\n  \"estadoActual\":\"ACTIVO\",\n  \"color\":\"AZUL\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/create",
+					"raw": "http://localhost:8080/activosfijos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -137,7 +137,7 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"create"
+						""
 					]
 				},
 				"description": "Se crea un activo fijo Valido"
@@ -170,7 +170,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/getbyid/{{ACTIVO_FIJO_ID}}",
+					"raw": "http://localhost:8080/activosfijos/{{ACTIVO_FIJO_ID}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -178,7 +178,6 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"getbyid",
 						"{{ACTIVO_FIJO_ID}}"
 					]
 				},
@@ -212,7 +211,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/getbyid/ASDEW",
+					"raw": "http://localhost:8080/activosfijos/ASDEW",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -220,7 +219,6 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"getbyid",
 						"ASDEW"
 					]
 				},
@@ -236,8 +234,8 @@
 					"script": {
 						"id": "8d779eb9-f520-4485-86ac-6f2e8c6989aa",
 						"exec": [
-							"pm.test(\"Status code is 400\", function(){",
-							"    pm.response.to.have.status(400);",
+							"pm.test(\"Status code is 404\", function(){",
+							"    pm.response.to.have.status(404);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -254,7 +252,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/getbyid/5d71022679d455427a2e6a41",
+					"raw": "http://localhost:8080/activosfijos/5d71022679d455427a2e6a41",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -262,8 +260,48 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"getbyid",
 						"5d71022679d455427a2e6a41"
+					]
+				},
+				"description": "Obtener un Activo Fijo que se creo"
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerActivosFijos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d779eb9-f520-4485-86ac-6f2e8c6989aa",
+						"exec": [
+							"pm.test(\"Status code is 202\", function(){",
+							"    pm.response.to.have.status(202);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						""
 					]
 				},
 				"description": "Obtener un Activo Fijo que se creo"
@@ -300,7 +338,7 @@
 					"raw": "{\n  \"id\":\"{{ACTIVO_FIJO_ID}}\" ,\n  \"serial\":\"789\",\n  \"fechaBaja\":\"1532526399000\"\n}\n"
 				},
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/update",
+					"raw": "http://localhost:8080/activosfijos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -308,7 +346,7 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"update"
+						""
 					]
 				},
 				"description": "se actualiza el activo fijo"
@@ -345,7 +383,7 @@
 					"raw": "{\n  \"id\":\"AWSDWS\" ,\n  \"serial\":\"789\",\n  \"fechaBaja\":\"1532526399000\"\n}\n"
 				},
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/update",
+					"raw": "http://localhost:8080/activosfijos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -353,7 +391,7 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"update"
+						""
 					]
 				},
 				"description": "se actualiza el activo fijo"
@@ -368,8 +406,8 @@
 					"script": {
 						"id": "932b2b56-9a69-4db6-b389-dbdd98cd61a4",
 						"exec": [
-							"pm.test(\"Status code is 400\", function(){",
-							"    pm.response.to.have.status(400);",
+							"pm.test(\"Status code is 500\", function(){",
+							"    pm.response.to.have.status(500);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -390,7 +428,7 @@
 					"raw": "{\n  \"id\":\"{{ACTIVO_FIJO_ID}}\" ,\n  \"serial\":\"789\",\n  \"fechaBaja\":\"3532516399000\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/update",
+					"raw": "http://localhost:8080/activosfijos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -398,7 +436,7 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"update"
+						""
 					]
 				},
 				"description": "se actualiza el activo fijo"
@@ -435,7 +473,7 @@
 					"raw": "{\n  \"id\":\"5d71022679d455427a2e6a41\" ,\n  \"serial\":\"789\",\n  \"fechaBaja\":\"3532516399000\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/activosfijos/update",
+					"raw": "http://localhost:8080/activosfijos/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -443,7 +481,7 @@
 					"port": "8080",
 					"path": [
 						"activosfijos",
-						"update"
+						""
 					]
 				},
 				"description": "se actualiza el activo fijo"
