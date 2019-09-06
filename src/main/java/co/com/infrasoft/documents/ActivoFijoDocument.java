@@ -1,30 +1,43 @@
 package co.com.infrasoft.documents;
 
+
+import java.time.ZonedDateTime;
 import java.util.Date;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.lang.Nullable;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
 
 import co.com.infrasoft.documents.utilities.Color;
 import co.com.infrasoft.documents.utilities.EstadoActual;
 import co.com.infrasoft.documents.utilities.Tipo;
 
 /**
- * @author Diego Riveros
- * Se utiliza un patron builder para la creacion de objetos
+ * @author Diego Riveros Se utiliza un patron builder para la creacion de
+ *         objetos
  */
 @Document
-public class ActivoFijoDocument{
-	
+public class ActivoFijoDocument {
 
 	/**
 	 * Mongo Product's ID
 	 */
 	@Id
 	private ObjectId id;
-	
+
 	/**
 	 * Id del activo fijo
 	 */
@@ -34,82 +47,126 @@ public class ActivoFijoDocument{
 	/**
 	 * Nombre del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un nombre")
+	@NotEmpty(message = "El activo fijo debe tener un nombre")
 	private String nombre;
-	
+
 	/**
 	 * Tipo del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un tipo")
+	@NotEmpty(message = "El activo fijo debe tener un tipo")
 	private String tipo;
-	
+
 	/**
 	 * Serial del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un serial")
+	@NotEmpty(message = "El activo fijo debe tener un serial")
 	private String serial;
-	
+
 	/**
 	 * Numero Interno del Inventario del Activo
 	 */
-	private long numInterInventario; 
-	
+	@NotNull(message = "El activo fijo debe tener un numero de interno de inventario")
+	@Min(value = 1L, message = "The value must be positive")
+	private long numInterInventario;
+
 	/**
 	 * Peso del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un peso")
+	@Min(value = 1L, message = "The value must be positive")
 	private int peso;
-	
+
 	/**
 	 * Alto del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un altura")
+	@Min(value = 1L, message = "The value must be positive")
 	private int alto;
-	
+
 	/**
 	 * Ancho del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un ancho")
+	@Min(value = 1L, message = "The value must be positive")
 	private int ancho;
-	
+
 	/**
 	 * Largo del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un largo")
+	@Min(value = 1L, message = "The value must be positive")
 	private int largo;
-	
+
 	/**
 	 * Valor de Compra del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un valor de compra")
+	@Min(value = 1L, message = "The value must be positive")
 	private double valorCompra;
-	
+
 	/**
 	 * Fecha de Compra del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un fecha de compra")
 	private Date fechaCompra;
-	
+
 	/**
 	 * Fecha de Baja del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un decha de baja")
 	private Date fechaBaja;
-	
+
+
 	/**
 	 * Estado Actual del Activo
 	 */
+	@NotNull(message = "El activo fijo debe tener un estado actual")
+	@NotEmpty(message = "El activo fijo debe tener un estado actual")
 	private String estadoActual;
-	
+
 	/**
 	 * Color del Activo
 	 */
-	private String color; 
+	@NotNull(message = "El activo fijo debe tener un color")
+	@NotEmpty(message = "El activo fijo debe tener un color")
+	private String color;
 	
 	
-	public ActivoFijoDocument() {}
+	/**
+	 * El area a que se asigno
+	 */
+	@JsonBackReference(value="activoFijoÁrea")
+	@Nullable
+	private Área área;
+
 	
+	/**
+	 * La persona a la que se asigno
+	 */
+	@JsonBackReference(value="activoFijoPersona")
+	@Nullable
+	private Persona persona;
+
+	/**
+	 * Constructor Fijo
+	 */
+	public ActivoFijoDocument() {
+	}
+
 	/**
 	 * La clase builder para inicializar el Activo Fijo
 	 *
 	 */
-	public static class Builder{
-		
-		private int activoFijoId;
+
+	public static class Builder {
+
 		private String nombre;
 		private String tipo;
 		private String serial;
-		private long numInterInventario; 
+		private long numInterInventario;
 		private int peso;
 		private int alto;
 		private int ancho;
@@ -119,13 +176,14 @@ public class ActivoFijoDocument{
 		private Date fechaBaja;
 		private String estadoActual;
 		private String color;
-		
-		
-		public Builder() {}
+
+		private Área área;
+		private Persona persona;
 
 		/**
 		 * Clase constructora
-		 * @param activoFijoId
+		 * 
+
 		 * @param nombre
 		 * @param tipo
 		 * @param serial
@@ -140,11 +198,10 @@ public class ActivoFijoDocument{
 		 * @param estadoActual
 		 * @param color
 		 */
-		public Builder(int activoFijoId, String nombre, String tipo, String serial, long numInterInventario, int peso, int alto,
-				int ancho, int largo, double valorCompra, Date fechaCompra, Date fechaBaja,
-				String estadoActual, String color) {
+		public Builder(String nombre, String tipo, String serial, long numInterInventario, int peso, int alto,
+				int ancho, int largo, double valorCompra, Date fechaCompra, Date fechaBaja, String estadoActual,
+				String color) {
 			super();
-			this.activoFijoId = activoFijoId;
 			this.nombre = nombre;
 			this.tipo = escogerTipo(tipo);
 			this.serial = serial;
@@ -159,78 +216,86 @@ public class ActivoFijoDocument{
 			this.estadoActual = escogerEstadoActual(estadoActual);
 			this.color = escogerColor(color);
 		}
-		
 
 		/**
 		 * Escoger el tipo de activo
+		 * 
 		 * @param tipo
 		 * @return el string del tipo escogido
 		 * @throws AssertionError cuando no existe el tipo
 		 */
-		private String escogerTipo(String tipo) throws AssertionError{
+		private String escogerTipo(String tipo) throws AssertionError {
 			String tipoEs = "";
-			if(Tipo.BIENESINMUEBLES.toString().toLowerCase().equals(tipo.toLowerCase())) {
+			if (Tipo.BIENESINMUEBLES.toString().toLowerCase().equals(tipo.toLowerCase())) {
 				tipoEs = tipo.toUpperCase();
-			}else if(Tipo.MAQUINARIA.toString().toLowerCase().equals(tipo.toLowerCase())) {
+			} else if (Tipo.MAQUINARIA.toString().toLowerCase().equals(tipo.toLowerCase())) {
 				tipoEs = tipo.toUpperCase();
-			}else if(Tipo.MATERIALOFICINA.toString().toLowerCase().equals(tipo.toLowerCase())) {
+			} else if (Tipo.MATERIALOFICINA.toString().toLowerCase().equals(tipo.toLowerCase())) {
 				tipoEs = tipo.toUpperCase();
-			}else {
+			} else {
 				throw new AssertionError("Tipo Desconocido: " + tipo);
 			}
 			return tipoEs;
 		}
-		
-		
+
 		/**
 		 * Seleciona el estado actual del activo fijo
+		 * 
 		 * @param estadoActual
 		 * @return
-		 * @throws AssertionError cuando no existe el estado actual 
+		 * @throws AssertionError cuando no existe el estado actual
 		 */
-		private String escogerEstadoActual(String estadoActual) throws AssertionError{
+		private String escogerEstadoActual(String estadoActual) throws AssertionError {
 			String estadoAtualEs = "";
-			if(EstadoActual.ACTIVO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			if (EstadoActual.ACTIVO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else if(EstadoActual.DADODEBAJA.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.DADODEBAJA.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else if(EstadoActual.ENREPARACIÓN.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.ENREPARACIÓN.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}
-			else if(EstadoActual.DISPONIBLE.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.DISPONIBLE.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else if(EstadoActual.ASIDNADO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
+			} else if (EstadoActual.ASIDNADO.toString().toLowerCase().equals(estadoActual.toLowerCase())) {
 				estadoAtualEs = estadoActual.toUpperCase();
-			}else {
+			} else {
 				throw new AssertionError("Estado Actual Desconocido: " + estadoActual);
 			}
 			return estadoAtualEs;
 		}
-		
+	
+
 		private String escogerColor(String color) {
 			String colorEs = "";
-			if(Color.AZUL.toString().toLowerCase().equals(color.toLowerCase())) {
+			if (Color.AZUL.toString().toLowerCase().equals(color.toLowerCase())) {
 				colorEs = color.toUpperCase();
-			}else {
+			} else {
 				throw new AssertionError("Color Desconocido: " + color);
 			}
 			return colorEs;
 		}
-	
+		
+		public Builder área(Área área) {
+			this.área = área;
+			return this;
+		}
+		
+		public Builder persona(Persona persona){
+			this.persona = persona;
+			return this;
+		}
 
 		public ActivoFijoDocument build() {
 			return new ActivoFijoDocument(this);
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * Inicializa los valores
+	 * 
 	 * @param builder
 	 */
 	private ActivoFijoDocument(Builder builder) {
-		this.activoFijoId = builder.activoFijoId;
 		this.nombre = builder.nombre;
 		this.tipo = builder.tipo;
 		this.serial = builder.serial;
@@ -244,6 +309,8 @@ public class ActivoFijoDocument{
 		this.fechaBaja = builder.fechaBaja;
 		this.estadoActual = builder.estadoActual;
 		this.color = builder.color;
+		this.área = builder.área;
+		this.persona = builder.persona;
 	}
 
 	public ObjectId getId() {
@@ -289,13 +356,13 @@ public class ActivoFijoDocument{
 	public double getValorCompra() {
 		return valorCompra;
 	}
-
-	public Date getFechaCompra() {
-		return fechaCompra;
+	public ZonedDateTime getFechaCompra() {
+		return ZonedDateConvertidor.convertDateToZoned(fechaCompra);
 	}
 
-	public Date getFechaBaja() {
-		return fechaBaja;
+	public ZonedDateTime getFechaBaja() {
+		return ZonedDateConvertidor.convertDateToZoned(fechaBaja);
+
 	}
 
 	public String getEstadoActual() {
@@ -306,13 +373,69 @@ public class ActivoFijoDocument{
 		return color;
 	}
 
-	public void setSerial(String serial) {
-		this.serial = serial;
+	@Override
+	public String toString() {
+		return "id=" + this.id + ", nombre=" + this.nombre + ", tipo=" + this.tipo + ", serial=" + this.serial
+				+ ", numero interno de inventario=" + this.numInterInventario + ", peso=" + this.peso + ", alto="
+				+ this.alto + ", ancho=" + this.ancho + ", largo=" + this.largo + ", valorCompra=" + this.valorCompra
+				+ ", fechaCompra=" + this.fechaCompra + ", fechaBaja=" + this.fechaBaja + ", estadoActual="
+				+ this.estadoActual + ", color=" + this.color + ", " + this.toStringÁreaOPerson();
 	}
 
-	public void setFechaBaja(Date fechaBaja) {
-		this.fechaBaja = fechaBaja;
+	/**
+	 * Crea el string de el área o persona
+	 * @return String
+	 */
+	private String toStringÁreaOPerson() {
+		if(this.persona != null) {
+			return this.persona.toString();
+		}else {
+			return this.área.toString();
+		}
 	}
-	
+
+	/**
+	 * Entrega la representaion de json de la clase
+	 * @return JsonNode
+	 */
+	public JsonNode toJson() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode rootNode = mapper.createObjectNode();
+		((ObjectNode) rootNode).put("id", this.id.toString());
+		((ObjectNode) rootNode).put("nombre", this.nombre);
+		((ObjectNode) rootNode).put("tipo", this.tipo);
+		((ObjectNode) rootNode).put("serial", this.serial);
+		((ObjectNode) rootNode).put("numero interno de inventario", this.numInterInventario + "");
+		((ObjectNode) rootNode).put("peso", this.peso + "");
+		((ObjectNode) rootNode).put("alto", this.alto + "");
+		((ObjectNode) rootNode).put("ancho", this.ancho + "");
+		((ObjectNode) rootNode).put("largo", this.largo + "");
+		((ObjectNode) rootNode).put("valorCompra", this.valorCompra + "");
+		((ObjectNode) rootNode).put("fechaCompra", this.fechaCompra.toString());
+		((ObjectNode) rootNode).put("fechaBaja", this.fechaBaja.toString());
+		((ObjectNode) rootNode).put("estadoActual", this.estadoActual);
+		((ObjectNode) rootNode).put("color", this.color);
+		this.toJsonÁreaOPersona(rootNode);
+		return rootNode;
+	}
+
+	/**
+	 * Crea el json del área o de la persona
+	 */
+	private void toJsonÁreaOPersona(JsonNode rootNode) {
+		if(this.persona != null) {
+			((ObjectNode) rootNode).set("Persona", this.persona.toJson());
+		}else if(this.área != null) {
+			((ObjectNode) rootNode).set("Área", this.área.toJson());
+		}
+	}
+
+	public Área getÁrea() {
+		return área;
+	}
+
+	public Persona getPersona() {
+		return persona;
+	}
+
 }
-

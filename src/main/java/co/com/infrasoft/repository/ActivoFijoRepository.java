@@ -17,28 +17,10 @@ import co.com.infrasoft.documents.ActivoFijoDocument;
 public interface ActivoFijoRepository extends MongoRepository<ActivoFijoDocument, ObjectId>{
 	
 	/**
-	 * Encuentra el activo fijo por el id de mongo 
-	 * @param ObjectId
-	 * @return ActivoFijo
-	 */
-	public ActivoFijoDocument findActivoFijoDocumentById(ObjectId id);
-	
-	
-	/**
-	 * Encuentra el activo fijo por el id  
-	 * @param id
-	 * @return ActivoFijo
-	 */
-	public ActivoFijoDocument findByActivoFijoId(int id);
-	
-	/**
 	 * Elimina el activo fijo con el id pasado
-	 * @param productPromotionId
-	 * @return
+	 * @param activoFijoId
 	 */
 	@DeleteQuery(value="{'activoFijoId' :?0}")
 	public void deleteActivoFijo(int activoFijoId);
-	
-
-
 }
+
