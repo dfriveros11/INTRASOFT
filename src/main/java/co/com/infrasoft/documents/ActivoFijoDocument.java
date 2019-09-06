@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.lang.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -128,12 +129,14 @@ public class ActivoFijoDocument {
 	 * El area a que se asigno
 	 */
 	@JsonBackReference(value="activoFijoÁrea")
+	@Nullable
 	private Área área;
 	
 	/**
 	 * La persona a la que se asigno
 	 */
 	@JsonBackReference(value="activoFijoPersona")
+	@Nullable
 	private Persona persona;
 
 	/**
@@ -358,15 +361,15 @@ public class ActivoFijoDocument {
 				+ ", numero interno de inventario=" + this.numInterInventario + ", peso=" + this.peso + ", alto="
 				+ this.alto + ", ancho=" + this.ancho + ", largo=" + this.largo + ", valorCompra=" + this.valorCompra
 				+ ", fechaCompra=" + this.fechaCompra + ", fechaBaja=" + this.fechaBaja + ", estadoActual="
-				+ this.estadoActual + ", color=" + this.color + ", " + this.toStringAreaOPerson();
+				+ this.estadoActual + ", color=" + this.color + ", " + this.toStringÁreaOPerson();
 	}
 
 	/**
 	 * Crea el string de el área o persona
 	 * @return String
 	 */
-	private String toStringAreaOPerson() {
-		if(this.persona == null) {
+	private String toStringÁreaOPerson() {
+		if(this.persona != null) {
 			return this.persona.toString();
 		}else {
 			return this.área.toString();
@@ -394,7 +397,19 @@ public class ActivoFijoDocument {
 		((ObjectNode) rootNode).put("fechaBaja", this.fechaBaja.toString());
 		((ObjectNode) rootNode).put("estadoActual", this.estadoActual);
 		((ObjectNode) rootNode).put("color", this.color);
+		this.toJsonÁreaOPersona(rootNode);
 		return rootNode;
+	}
+
+	/**
+	 * Crea el json del área o de la persona
+	 */
+	private void toJsonÁreaOPersona(JsonNode rootNode) {
+		if(this.persona != null) {
+			((ObjectNode) rootNode).set("Persona", this.persona.toJson());
+		}else if(this.área != null) {
+			((ObjectNode) rootNode).set("Área", this.área.toJson());
+		}
 	}
 
 	public Área getÁrea() {

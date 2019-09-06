@@ -146,6 +146,7 @@ public class ActivoFijoController {
 		}catch(NullPointerException e) {
 			((ObjectNode) rootNode).put("http_status", "404");
 			((ObjectNode) rootNode).put("message", e.getMessage());
+			e.printStackTrace();
 			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.NOT_FOUND);
 		}
 	}

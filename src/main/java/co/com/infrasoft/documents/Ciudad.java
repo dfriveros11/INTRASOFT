@@ -72,7 +72,7 @@ public class Ciudad {
 	public JsonNode toJson() {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.createObjectNode();
-		((ObjectNode) rootNode).put("nombre", this.nombre);
+		((ObjectNode) rootNode).put("Nombre Ciudad", this.nombre);
 		return rootNode;
 	}
 

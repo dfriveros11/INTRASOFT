@@ -82,7 +82,8 @@ public class Área {
 	public JsonNode toJson() {
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode rootNode = mapper.createObjectNode();
-		((ObjectNode) rootNode).put("nombre", this.nombre);
+		((ObjectNode) rootNode).put("Nombre Área", this.nombre);
+		((ObjectNode) rootNode).set("Nombre Ciudad", this.ciudad.toJson());
 		return rootNode;
 	}
 

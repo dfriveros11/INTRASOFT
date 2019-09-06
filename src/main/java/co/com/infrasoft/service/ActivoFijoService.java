@@ -14,6 +14,8 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import co.com.infrasoft.documents.ActivoFijoDocument;
+import co.com.infrasoft.documents.Persona;
+import co.com.infrasoft.documents.Área;
 import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
 import co.com.infrasoft.repository.ActivoFijoRepository;
 
@@ -121,11 +123,19 @@ public class ActivoFijoService {
 	 */
 	public ObjectId crearActivoFijo(ActivoFijoDocument activoFijo) throws IllegalArgumentException {
 		verficarFechas(activoFijo.getFechaCompra(), activoFijo.getFechaBaja());
-		if (activoFijo.getPersona() != null && activoFijo.getPersona() != null) {
+		if (hayPersonaYÁrea(activoFijo.getPersona(), activoFijo.getÁrea())) {
 			throw new IllegalArgumentException(
 					"El activo solo puede estar asociado a una persona a o área, pero no a las dos");
 		}
 		return activoRepository.insert(activoFijo).getId();
+	}
+
+	private boolean hayPersonaYÁrea(Persona persona, Área área) {
+		boolean hayPersonaYÁrea = false;
+		if(persona != null && área != null) {
+			hayPersonaYÁrea = true;
+		}
+		return hayPersonaYÁrea;
 	}
 
 	/**

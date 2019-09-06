@@ -55,6 +55,104 @@
 			"response": []
 		},
 		{
+			"name": "crearUnActivoFijoPersona",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bfe4fd52-75c3-4ffd-a622-76dca4ac8bac",
+						"exec": [
+							"pm.test(\"Status code is 202\", function(){",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"ACTIVO_FIJO_PERSONA_ID\", data.id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\":\"John\",\n  \"tipo\": \"MAQUINARIA\",\n  \"serial\":\"123\",\n  \"numInterInventario\":\"123\",\n  \"peso\":\"10\",\n  \"alto\":\"10\",\n  \"ancho\":\"10\",\n  \"largo\":\"10\",\n  \"valorCompra\":\"200560.22\",\n  \"fechaCompra\":\"2532516399000\",\n  \"fechaBaja\":\"1532516399000\",\n  \"estadoActual\":\"ACTIVO\",\n  \"color\":\"AZUL\",\n  \"persona\":{\n  \t\"nombre\": \"Sergio\"\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						""
+					]
+				},
+				"description": "Se crea un activo fijo Valido"
+			},
+			"response": []
+		},
+		{
+			"name": "crearUnActivoFijoÁrea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bfe4fd52-75c3-4ffd-a622-76dca4ac8bac",
+						"exec": [
+							"pm.test(\"Status code is 202\", function(){",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"var data = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"ACTIVO_FIJO_ÁREA_ID\", data.id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\":\"John\",\n  \"tipo\": \"MAQUINARIA\",\n  \"serial\":\"123\",\n  \"numInterInventario\":\"123\",\n  \"peso\":\"10\",\n  \"alto\":\"10\",\n  \"ancho\":\"10\",\n  \"largo\":\"10\",\n  \"valorCompra\":\"200560.22\",\n  \"fechaCompra\":\"2532516399000\",\n  \"fechaBaja\":\"1532516399000\",\n  \"estadoActual\":\"ACTIVO\",\n  \"color\":\"AZUL\",\n  \"área\":{\n  \t\"nombre\": \"PruebaÁrea\",\n  \t\"ciudad\":{\n  \t\t\"nombre\": \"Bogotá\"\n  \t}\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						""
+					]
+				},
+				"description": "Se crea un activo fijo Valido"
+			},
+			"response": []
+		},
+		{
 			"name": "crearUnActivoFijoConFaltaCampo",
 			"event": [
 				{
@@ -179,6 +277,88 @@
 					"path": [
 						"activosfijos",
 						"{{ACTIVO_FIJO_ID}}"
+					]
+				},
+				"description": "Obtener un Activo Fijo que se creo"
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerActivoFijoPersona",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea66e5c8-4cc2-4975-8f0a-0e96eabbdaa3",
+						"exec": [
+							"pm.test(\"Status code is 202\", function(){",
+							"    pm.response.to.have.status(202);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/{{ACTIVO_FIJO_PERSONA_ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						"{{ACTIVO_FIJO_PERSONA_ID}}"
+					]
+				},
+				"description": "Obtener un Activo Fijo que se creo"
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerActivoFijoÁrea",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea66e5c8-4cc2-4975-8f0a-0e96eabbdaa3",
+						"exec": [
+							"pm.test(\"Status code is 202\", function(){",
+							"    pm.response.to.have.status(202);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/{{ACTIVO_FIJO_ÁREA_ID}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						"{{ACTIVO_FIJO_ÁREA_ID}}"
 					]
 				},
 				"description": "Obtener un Activo Fijo que se creo"
