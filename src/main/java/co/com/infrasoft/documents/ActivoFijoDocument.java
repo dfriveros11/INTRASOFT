@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.Nullable;
 
@@ -38,11 +37,6 @@ public class ActivoFijoDocument {
 	@Id
 	private ObjectId id;
 
-	/**
-	 * Id del activo fijo
-	 */
-	@Indexed
-	private int activoFijoId;
 	
 	/**
 	 * Nombre del Activo
@@ -315,10 +309,6 @@ public class ActivoFijoDocument {
 
 	public ObjectId getId() {
 		return id;
-	}
-	
-	public int getActivoFijoId() {
-		return activoFijoId;
 	}
 
 	public String getNombre() {
