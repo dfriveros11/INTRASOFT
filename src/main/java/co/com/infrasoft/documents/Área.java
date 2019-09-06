@@ -23,7 +23,7 @@ public class Área {
 	private List<ActivoFijoDocument> activosFijos;
 	
 	/**
-	 * La ciudad a que eprtenece
+	 * La ciudad a que pertenece
 	 */
 	@JsonBackReference(value="áreaCiudad")
 	private Ciudad ciudad;
