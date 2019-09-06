@@ -153,6 +153,51 @@
 			"response": []
 		},
 		{
+			"name": "crearUnActivoFijoÁreaPersona",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bfe4fd52-75c3-4ffd-a622-76dca4ac8bac",
+						"exec": [
+							"pm.test(\"Status code is 400\", function(){",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\":\"John\",\n  \"tipo\": \"MAQUINARIA\",\n  \"serial\":\"123\",\n  \"numInterInventario\":\"123\",\n  \"peso\":\"10\",\n  \"alto\":\"10\",\n  \"ancho\":\"10\",\n  \"largo\":\"10\",\n  \"valorCompra\":\"200560.22\",\n  \"fechaCompra\":\"2532516399000\",\n  \"fechaBaja\":\"1532516399000\",\n  \"estadoActual\":\"ACTIVO\",\n  \"color\":\"AZUL\",\n   \"persona\":{\n  \t\"nombre\": \"Sergio\"\n  },\n  \"área\":{\n  \t\"nombre\": \"PruebaÁrea\",\n  \t\"ciudad\":{\n  \t\t\"nombre\": \"Bogotá\"\n  \t}\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/activosfijos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"activosfijos",
+						""
+					]
+				},
+				"description": "Se crea un activo fijo Valido"
+			},
+			"response": []
+		},
+		{
 			"name": "crearUnActivoFijoConFaltaCampo",
 			"event": [
 				{
