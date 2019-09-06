@@ -170,7 +170,6 @@ public class ActivoFijoDocument {
 		/**
 		 * Clase constructora
 		 * 
-		 * @param activoFijoId
 		 * @param nombre
 		 * @param tipo
 		 * @param serial

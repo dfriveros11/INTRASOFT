@@ -126,7 +126,6 @@ public class ActivoFijoController {
 	
 	/**
 	 * Obtiene todos los activos fijos
-	 * @param id
 	 * @return ResponseEntity<JsonNode>
 	 */
 	@GetMapping("/")

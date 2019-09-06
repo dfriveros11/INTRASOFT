@@ -18,13 +18,9 @@ public interface ActivoFijoRepository extends MongoRepository<ActivoFijoDocument
 	
 	/**
 	 * Elimina el activo fijo con el id pasado
-	 * @param productPromotionId
-	 * @return
+	 * @param activoFijoId
 	 */
 	@DeleteQuery(value="{'activoFijoId' :?0}")
 	public void deleteActivoFijo(int activoFijoId);
-	
-
-
 }
 

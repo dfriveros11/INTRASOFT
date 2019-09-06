@@ -48,7 +48,7 @@ public class ActivoFijoService {
 	 * Obtiene el activoFijo
 	 * 
 	 * @param id
-	 * @return
+	 * @return ActivoFijoDocument
 	 * @throws NullPointerException
 	 */
 	public ActivoFijoDocument obtenerActivoFijo(ObjectId id) throws NullPointerException {
@@ -59,7 +59,7 @@ public class ActivoFijoService {
 	 * Obtiene el activo Fijo
 	 * 
 	 * @param id
-	 * @return
+	 * @return ActivoFijoDocument
 	 * @throws NullPointerException El objeto no existe
 	 */
 	private ActivoFijoDocument encontraActivoFijo(ObjectId id) throws NullPointerException {
@@ -117,7 +117,7 @@ public class ActivoFijoService {
 	 * compra > fecha de baja
 	 * 
 	 * @param activoFijo
-	 * @return
+	 * @return ObjectId
 	 * @throws IllegalArgumentException En el caso que la fecha de compra < lafecha
 	 *                                  de baja
 	 */
