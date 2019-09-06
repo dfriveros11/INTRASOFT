@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -121,6 +122,19 @@ public class ActivoFijoDocument {
 	@NotNull(message = "El activo fijo debe tener un color")
 	@NotEmpty(message = "El activo fijo debe tener un color")
 	private String color;
+	
+	
+	/**
+	 * El area a que se asigno
+	 */
+	@JsonBackReference(value="activoFijoÁrea")
+	private Área área;
+	
+	/**
+	 * La persona a la que se asigno
+	 */
+	@JsonBackReference(value="activoFijoPersona")
+	private Persona persona;
 
 	public ActivoFijoDocument() {
 	}
@@ -144,6 +158,8 @@ public class ActivoFijoDocument {
 		private Date fechaBaja;
 		private String estadoActual;
 		private String color;
+		private Área área;
+		private Persona persona;
 
 		/**
 		 * Clase constructora
@@ -165,7 +181,7 @@ public class ActivoFijoDocument {
 		 */
 		public Builder(String nombre, String tipo, String serial, long numInterInventario, int peso, int alto,
 				int ancho, int largo, double valorCompra, Date fechaCompra, Date fechaBaja, String estadoActual,
-				String color) {
+				String color, Área área, Persona persona) {
 			super();
 			this.nombre = nombre;
 			this.tipo = escogerTipo(tipo);
@@ -180,6 +196,8 @@ public class ActivoFijoDocument {
 			this.fechaBaja = fechaBaja;
 			this.estadoActual = escogerEstadoActual(estadoActual);
 			this.color = escogerColor(color);
+			this.área = área;
+			this.persona= persona;
 		}
 
 		/**
@@ -263,6 +281,8 @@ public class ActivoFijoDocument {
 		this.fechaBaja = builder.fechaBaja;
 		this.estadoActual = builder.estadoActual;
 		this.color = builder.color;
+		this.área = builder.área;
+		this.persona = builder.persona;
 	}
 
 	public ObjectId getId() {
@@ -327,7 +347,19 @@ public class ActivoFijoDocument {
 				+ ", numero interno de inventario=" + this.numInterInventario + ", peso=" + this.peso + ", alto="
 				+ this.alto + ", ancho=" + this.ancho + ", largo=" + this.largo + ", valorCompra=" + this.valorCompra
 				+ ", fechaCompra=" + this.fechaCompra + ", fechaBaja=" + this.fechaBaja + ", estadoActual="
-				+ this.estadoActual + ", color=" + this.color;
+				+ this.estadoActual + ", color=" + this.color + ", " + this.toStringAreaOPerson();
+	}
+
+	/**
+	 * Crea el string de el área o persona
+	 * @return String
+	 */
+	private String toStringAreaOPerson() {
+		if(this.persona == null) {
+			return this.persona.toString();
+		}else {
+			return this.área.toString();
+		}
 	}
 
 	/**
@@ -352,6 +384,14 @@ public class ActivoFijoDocument {
 		((ObjectNode) rootNode).put("estadoActual", this.estadoActual);
 		((ObjectNode) rootNode).put("color", this.color);
 		return rootNode;
+	}
+
+	public Área getÁrea() {
+		return área;
+	}
+
+	public Persona getPersona() {
+		return persona;
 	}
 
 }

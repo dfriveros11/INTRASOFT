@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import co.com.infrasoft.IntrasoftApplication;
 import co.com.infrasoft.documents.ActivoFijoDocument;
+import co.com.infrasoft.documents.Ciudad;
 import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
 
 @RunWith(SpringRunner.class)
@@ -43,10 +44,11 @@ public class ActivoFijoRepositoryTest {
 		LocalDateTime fecha = LocalDateTime.now(ZoneOffset.UTC);
 		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaBaja = fechaCompra.plusMonths(2);
-
+		
+		
 		ActivoFijoDocument activoFijoGuardar = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100,
 				100, 100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra),
-				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 
 		ActivoFijoDocument activoFijoComprobar = activoFijoRepository.insert(activoFijoGuardar);
 
@@ -82,7 +84,7 @@ public class ActivoFijoRepositoryTest {
 
 		new ActivoFijoDocument.Builder("Prueba", "No existe", "123", 1, 100, 100, 100, 100, 986.000,
 				ZonedDateConvertidor.convertZonedToDate(fechaCompra),
-				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 
 	}
 
@@ -94,7 +96,7 @@ public class ActivoFijoRepositoryTest {
 
 		new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100, 100, 100, 986.000,
 				ZonedDateConvertidor.convertZonedToDate(fechaCompra),
-				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "No existe", "azul").build();
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "No existe", "azul", null, null).build();
 
 	}
 
@@ -106,7 +108,7 @@ public class ActivoFijoRepositoryTest {
 
 		new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100, 100, 100, 986.000,
 				ZonedDateConvertidor.convertZonedToDate(fechaCompra),
-				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "No existe").build();
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "No existe", null, null).build();
 
 	}
 
@@ -118,7 +120,7 @@ public class ActivoFijoRepositoryTest {
 
 		ActivoFijoDocument activoFijoGuardar = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100,
 				100, 100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra),
-				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 		ActivoFijoDocument activoFijoComprobar = activoFijoRepository.insert(activoFijoGuardar);
 
 		Query query = new Query();
@@ -131,7 +133,7 @@ public class ActivoFijoRepositoryTest {
 		Optional<ActivoFijoDocument> activoFijoModificado = activoFijoRepository.findById(activoFijoComprobar.getId());
 
 		assertEquals("El serial no cambio", "67890", activoFijoModificado.get().getSerial());
-		assertEquals("La fecha de baja no cambio", "05 Jan 2020",
+		assertEquals("La fecha de baja no cambio", "06 Jan 2020",
 				format.format(activoFijoModificado.get().getFechaBaja()));
 
 		activoFijoRepository.deleteAll();

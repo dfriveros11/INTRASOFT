@@ -38,7 +38,7 @@ public class ActivoFijoServiceTest {
 		ZonedDateTime fechaCompra = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaBaja = fechaCompra.plusMonths(2);
 		ActivoFijoDocument activoFijo = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 		activoFijoService.crearActivoFijo(activoFijo);
 	}
 	
@@ -48,7 +48,7 @@ public class ActivoFijoServiceTest {
 		ZonedDateTime fechaBaja = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaCompra = fechaBaja.plusMonths(2);
 		ActivoFijoDocument activoFijo = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 		activoFijoService.crearActivoFijo(activoFijo);
 		activoFijoRepository.deleteAll();
 	}
@@ -59,7 +59,7 @@ public class ActivoFijoServiceTest {
 		ZonedDateTime fechaBaja = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaCompra = fechaBaja.plusMonths(2);
 		ActivoFijoDocument activoFijo = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 		ObjectId id = activoFijoService.crearActivoFijo(activoFijo);
 		ActivoFijoDocument activo = activoFijoService.obtenerActivoFijo(id);
 		assertNotNull(activo);
@@ -81,7 +81,7 @@ public class ActivoFijoServiceTest {
 		ZonedDateTime fechaBaja = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaCompra = fechaBaja.plusMonths(2);
 		ActivoFijoDocument activoFijo = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 		ObjectId id = activoFijoService.crearActivoFijo(activoFijo);
 		activoFijoService.actualizarActivoFijo(id, "456789", fecha.plusMonths(1));
 		activoFijoRepository.deleteAll();
@@ -93,7 +93,7 @@ public class ActivoFijoServiceTest {
 		ZonedDateTime fechaBaja = ZonedDateTime.of(fecha, zona);
 		ZonedDateTime fechaCompra = fechaBaja.plusMonths(2);
 		ActivoFijoDocument activoFijo = new ActivoFijoDocument.Builder("Prueba", "Maquinaria", "123", 1, 100, 100,
-				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul").build();
+				100, 100, 986.000, ZonedDateConvertidor.convertZonedToDate(fechaCompra), ZonedDateConvertidor.convertZonedToDate(fechaBaja), "activo", "azul", null, null).build();
 		ObjectId id = activoFijoService.crearActivoFijo(activoFijo);
 		activoFijoService.actualizarActivoFijo(id, "456789", fecha.plusMonths(5));
 		activoFijoRepository.deleteAll();
