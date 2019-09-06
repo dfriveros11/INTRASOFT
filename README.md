@@ -1,6 +1,6 @@
 # INTRASOFT
 
-##Descripción 
+## Descripción 
 
 Para este proyecto se uso mongoDB para guardar los datos. La razón para esto es que los activos fijos siempre estan en cambio por lo cual los activos fijos necesitan ser guardados en una base de datos que permita flexibilidad. Además, el tiempo de tiempo de respuesta en busquedas es rapido. 
 

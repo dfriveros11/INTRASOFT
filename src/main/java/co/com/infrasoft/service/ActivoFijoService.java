@@ -1,33 +1,35 @@
 package co.com.infrasoft.service;
 
+
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import co.com.infrasoft.documents.ActivoFijoDocument;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.stereotype.Service;
-
-import co.com.infrasoft.documents.ActivoFijoDocument;
 import co.com.infrasoft.documents.Persona;
 import co.com.infrasoft.documents.Área;
 import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
+
 import co.com.infrasoft.repository.ActivoFijoRepository;
 
 /**
  * Aqui esta toda la logica de los servicios
- * 
  * @author Diego Riveros
  *
  */
 @Service
 public class ActivoFijoService {
-
+	
+	@Autowired
 	private ActivoFijoRepository activoRepository;
 
 	private MongoTemplate mongoTemplate;

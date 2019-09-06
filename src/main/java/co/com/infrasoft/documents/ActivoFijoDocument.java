@@ -1,5 +1,6 @@
 package co.com.infrasoft.documents;
 
+
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -7,8 +8,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.Nullable;
 
@@ -16,8 +19,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
+
 import co.com.infrasoft.documents.utilities.Color;
 import co.com.infrasoft.documents.utilities.EstadoActual;
 import co.com.infrasoft.documents.utilities.Tipo;
@@ -35,6 +38,12 @@ public class ActivoFijoDocument {
 	@Id
 	private ObjectId id;
 
+	/**
+	 * Id del activo fijo
+	 */
+	@Indexed
+	private int activoFijoId;
+	
 	/**
 	 * Nombre del Activo
 	 */
@@ -110,6 +119,7 @@ public class ActivoFijoDocument {
 	@NotNull(message = "El activo fijo debe tener un decha de baja")
 	private Date fechaBaja;
 
+
 	/**
 	 * Estado Actual del Activo
 	 */
@@ -131,6 +141,7 @@ public class ActivoFijoDocument {
 	@JsonBackReference(value="activoFijoÁrea")
 	@Nullable
 	private Área área;
+
 	
 	/**
 	 * La persona a la que se asigno
@@ -149,6 +160,7 @@ public class ActivoFijoDocument {
 	 * La clase builder para inicializar el Activo Fijo
 	 *
 	 */
+
 	public static class Builder {
 
 		private String nombre;
@@ -164,12 +176,14 @@ public class ActivoFijoDocument {
 		private Date fechaBaja;
 		private String estadoActual;
 		private String color;
+
 		private Área área;
 		private Persona persona;
 
 		/**
 		 * Clase constructora
 		 * 
+
 		 * @param nombre
 		 * @param tipo
 		 * @param serial
@@ -248,6 +262,7 @@ public class ActivoFijoDocument {
 			}
 			return estadoAtualEs;
 		}
+	
 
 		private String escogerColor(String color) {
 			String colorEs = "";
@@ -301,6 +316,10 @@ public class ActivoFijoDocument {
 	public ObjectId getId() {
 		return id;
 	}
+	
+	public int getActivoFijoId() {
+		return activoFijoId;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -337,13 +356,13 @@ public class ActivoFijoDocument {
 	public double getValorCompra() {
 		return valorCompra;
 	}
-
 	public ZonedDateTime getFechaCompra() {
 		return ZonedDateConvertidor.convertDateToZoned(fechaCompra);
 	}
 
 	public ZonedDateTime getFechaBaja() {
 		return ZonedDateConvertidor.convertDateToZoned(fechaBaja);
+
 	}
 
 	public String getEstadoActual() {

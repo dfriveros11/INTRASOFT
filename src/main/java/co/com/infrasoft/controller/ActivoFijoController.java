@@ -1,5 +1,6 @@
 package co.com.infrasoft.controller;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,17 +19,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import co.com.infrasoft.documents.ActivoFijoDocument;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import co.com.infrasoft.documents.ActivoFijoDocument;
 import co.com.infrasoft.documents.convertidor.ZonedDateConvertidor;
 import co.com.infrasoft.service.ActivoFijoService;
 
 /**
  * 
+<<<<<<< HEAD
+ * Aqui esta los end points
+=======
  * Aqui son los end points
+>>>>>>> develop
  * 
  * @author Diego Riveros
  *
@@ -38,7 +43,9 @@ import co.com.infrasoft.service.ActivoFijoService;
 public class ActivoFijoController {
 	
 	private ActivoFijoService activoFijoservice;
+
 	private final ObjectMapper mapper; 
+
 	
 	/**
 	 * Constructor
@@ -148,7 +155,6 @@ public class ActivoFijoController {
 			e.printStackTrace();
 			return new ResponseEntity<JsonNode>(rootNode, HttpStatus.NOT_FOUND);
 		}
-	}
-	
+	}	
 
 }
