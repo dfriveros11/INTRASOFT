@@ -36,10 +36,14 @@ public class Persona {
 		private String nombre;
 		private List<ActivoFijoDocument> activosFijos;
 		
-		public Builder(String nombre, List<ActivoFijoDocument> activosFijos) {
+		public Builder(String nombre) {
 			super();
 			this.nombre = nombre;
+		}
+		
+		public Builder activosFijos(List<ActivoFijoDocument> activosFijos) {
 			this.activosFijos = activosFijos;
+			return this;
 		}
 		
 		public Persona build() {

@@ -136,6 +136,9 @@ public class ActivoFijoDocument {
 	@JsonBackReference(value="activoFijoPersona")
 	private Persona persona;
 
+	/**
+	 * Constructor Fijo
+	 */
 	public ActivoFijoDocument() {
 	}
 
@@ -181,7 +184,7 @@ public class ActivoFijoDocument {
 		 */
 		public Builder(String nombre, String tipo, String serial, long numInterInventario, int peso, int alto,
 				int ancho, int largo, double valorCompra, Date fechaCompra, Date fechaBaja, String estadoActual,
-				String color, Área área, Persona persona) {
+				String color) {
 			super();
 			this.nombre = nombre;
 			this.tipo = escogerTipo(tipo);
@@ -196,8 +199,6 @@ public class ActivoFijoDocument {
 			this.fechaBaja = fechaBaja;
 			this.estadoActual = escogerEstadoActual(estadoActual);
 			this.color = escogerColor(color);
-			this.área = área;
-			this.persona= persona;
 		}
 
 		/**
@@ -254,6 +255,16 @@ public class ActivoFijoDocument {
 				throw new AssertionError("Color Desconocido: " + color);
 			}
 			return colorEs;
+		}
+		
+		public Builder área(Área área) {
+			this.área = área;
+			return this;
+		}
+		
+		public Builder persona(Persona persona){
+			this.persona = persona;
+			return this;
 		}
 
 		public ActivoFijoDocument build() {

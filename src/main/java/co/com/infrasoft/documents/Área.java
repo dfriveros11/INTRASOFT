@@ -43,13 +43,16 @@ public class Área {
 		private List<ActivoFijoDocument> activosFijos;
 		private Ciudad ciudad;
 		
-		public Builder(String nombre, List<ActivoFijoDocument> activosFijos, Ciudad ciudad)  {
+		public Builder(String nombre, Ciudad ciudad)  {
 			super();
 			this.nombre = nombre;
-			this.activosFijos = activosFijos;
 			this.ciudad = ciudad;
 		}
 		
+		public Builder activosFijos(List<ActivoFijoDocument> activosFijos) {
+			this.activosFijos = activosFijos;
+			return this;
+		}
 		public Área build() {
 			return new Área(this);
 		}

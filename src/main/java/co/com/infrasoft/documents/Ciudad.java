@@ -34,10 +34,14 @@ public class Ciudad {
 		private String nombre;
 		private List<Área> areas;
 		
-		public Builder(String nombre, List<Área> areas) {
+		public Builder(String nombre) {
 			super();
 			this.nombre = nombre;
+		}
+		
+		public Builder areas( List<Área> areas) {
 			this.areas = areas;
+			return this;
 		}
 		
 		public Ciudad build() {
